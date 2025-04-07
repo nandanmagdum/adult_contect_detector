@@ -1,6 +1,6 @@
+import tensorflow_hub as hub
 from tensorflow.keras.models import load_model
 
-_model = load_model("model.h5")
-
 def get_model():
-    return _model
+    model = load_model("model.h5", custom_objects={"KerasLayer": hub.KerasLayer})
+    return model
