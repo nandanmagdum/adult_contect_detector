@@ -1,8 +1,18 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware  # 👉 ADD THIS
 from app.utils import preprocess_image
 from app.predictor import predict_adult_content
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    # allow_origins=["http://localhost:5173"],  # or ["*"] to allow all origins (not recommended for prod)
+    allow_origins=["*"],  # or ["*"] to allow all origins (not recommended for prod)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
